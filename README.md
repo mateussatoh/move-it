@@ -1,6 +1,6 @@
 <h1 align="center"> 🏃‍ move-it</h1>
 
-<h3 align="center">Aplicativo com lógica de game que disponibiliza desafios cronometrados para melhorar a postura e a visão.</h3>
+<h3 align="center">Timer pomodoro com lógica de game que disponibiliza desafios para melhorar a postura e a visão.</h3>
 
 <p align="center">
   <a href="#techs">Sobre</a> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
@@ -24,9 +24,8 @@
 Projeto desenvolvido durante a quarta edição da NLW, evento disponibilizado pela [@Rocketseat](https://rocketseat.com.br/)
 <br>
 O move.it é uma aplicação web que tem o objetivo de melhorar a qualidade de vida de pessoas que passam longos períodos trabalhando em um computador.
-As horas sentadas em frente a um monitor podem causar problemas na postura e na visão, desse modo, o move.it é uma forma de implementar exercícios que melhorem
-a visão e a postura, e utilizando o conceito de gamificação, a aderência aos desafios são estimulados de uma forma divertida.  
-
+As horas sentadas em frente a um monitor podem causar problemas na postura e na visão, além de não serem aproveitadas ao máximo se não houverem pausas.
+A aplicação é uma forma de implementar exercícios para o corpo, utilizando o conceito de gamificação, e de manter o foco com a técnica pomodoro.
 <br>
 
 O app foi desenvolvido em NextJS utilizando TypeScript e você pode acessa-lo por [aqui](https://move-it-mateussatoh.vercel.app/)
