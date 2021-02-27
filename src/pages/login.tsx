@@ -4,7 +4,7 @@ import styles from "../styles/pages/Login.module.css";
 export default function Home() {
   const router = useRouter();
   async function requestGitHubAuth() {
-    const CODE_REQUEST = `https://github.com/login/oauth/authorize?client_id=ccdf4574d42179bf1727&redirect_uri=http://localhost:3000`;
+    const CODE_REQUEST = `https://github.com/login/oauth/authorize?client_id=ccdf4574d42179bf1727&redirect_uri=https://move-it-nlw.vercel.app/`;
     router.push(CODE_REQUEST);
   }
 

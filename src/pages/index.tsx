@@ -94,7 +94,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   } else if (code) {
     const clientSecret = process.env.CLIENT_SECRET;
-    const ACCESS_TOKEN_REQUEST = `https://github.com/login/oauth/access_token?client_id=ccdf4574d42179bf1727&client_secret=${clientSecret}&code=${code}&redirect_uri=http://localhost:3000/`;
+    const ACCESS_TOKEN_REQUEST = `https://github.com/login/oauth/access_token?client_id=ccdf4574d42179bf1727&client_secret=${clientSecret}&code=${code}&redirect_uri=https://move-it-nlw.vercel.app/`;
     const ACCESS_TOKEN_RESPONSE = await axios.get(ACCESS_TOKEN_REQUEST, {
       headers: {
         Accept: "application/json",
