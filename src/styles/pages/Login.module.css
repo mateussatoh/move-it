@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+
+  background-color: var(--blue);
+}
+
+.container > div {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 60vh;
+  right: 20vw;
+}
+
+.container div strong {
+  color: var(--white);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 46px;
+}
+
+.container div p {
+  display: flex;
+  color: #b3b9ff;
+  width: 25rem;
+  height: 3.5rem;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 30px;
+}
+
+.container div button {
+  width: 100%;
+  height: 5rem;
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 5px;
+  background: #161b22;
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 600;
+  transition: ease 0.2s;
+}
+
+.container div button img {
+  padding-right: 2rem;
+  height: 50%;
+}
+.container div button:hover {
+  background: #555555;
+}
