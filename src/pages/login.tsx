@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import styles from "../styles/pages/Login.module.css";
 
@@ -10,6 +11,9 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
+      <Head>
+        <title>Login | move.it</title>
+      </Head>
       <img src="symbol.svg" alt="Logo stripes" />
       <div>
         <img src="logo-full-white.svg" alt="Full logo" />

@@ -12,9 +12,9 @@ import { CountdownProvider } from "../contexts/CountdownContext";
 import { ChallengesProvider } from "../contexts/ChallengesContext";
 
 import axios from "axios";
-import Cookies from "js-cookie";
 import { ProfileProvider } from "../contexts/ProfileContext";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 interface ChallengesPageProps {
   hasQuery: boolean;
@@ -28,10 +28,6 @@ interface ChallengesPageProps {
 
 export default function ChallengesPage(props: ChallengesPageProps) {
   const router = useRouter();
-
-  const pushToLoginPage = async () => {
-    router.push("/login");
-  };
 
   if (props.hasQuery || props.hasCookies) {
     return (
@@ -63,7 +59,9 @@ export default function ChallengesPage(props: ChallengesPageProps) {
       </ChallengesProvider>
     );
   } else {
-    pushToLoginPage();
+    useEffect(() => {
+      router.push("/login");
+    }, []);
     return null;
   }
 }
