@@ -7,129 +7,94 @@ import { Countdown } from "../components/Countdown";
 import { CompletedChallanges } from "../components/CompletedChallanges";
 import { ChallengeBox } from "../components/ChallengeBox";
 
-import styles from "../styles/pages/Home.module.css";
+import homeStyles from "../styles/pages/Home.module.css";
+import loginStyles from "../styles/pages/Login.module.css";
+
 import { CountdownProvider } from "../contexts/CountdownContext";
 import { ChallengesProvider } from "../contexts/ChallengesContext";
-
-import axios from "axios";
 import { ProfileProvider } from "../contexts/ProfileContext";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
 
 interface ChallengesPageProps {
-  hasQuery: boolean;
-  hasCookies: boolean;
-  avatar_url: string;
-  name: string;
   level: number;
   experience: number;
   completedChallenges: number;
 }
 
-export default function ChallengesPage(props: ChallengesPageProps) {
-  const router = useRouter();
+import { signIn, signOut, useSession } from "next-auth/client";
 
-  if (props.hasQuery || props.hasCookies) {
-    return (
-      <ChallengesProvider
-        level={props.level}
-        experience={props.experience}
-        completedChallenges={props.completedChallenges}
-      >
-        <div className={styles.container}>
-          <Head>
-            <title>Início | move.it</title>
-          </Head>
-          <ExperienceBar />
-          <CountdownProvider>
-            <section>
-              <div>
-                <ProfileProvider avatarUrl={props.avatar_url} name={props.name}>
-                  <Profile />
-                </ProfileProvider>
-                <CompletedChallanges />
-                <Countdown />
-              </div>
-              <div>
-                <ChallengeBox />
-              </div>
-            </section>
-          </CountdownProvider>
-        </div>
-      </ChallengesProvider>
-    );
-  } else {
-    useEffect(() => {
-      router.push("/login");
-    }, []);
-    return null;
-  }
+export default function ChallengesPage(props: ChallengesPageProps) {
+  const [session, loading] = useSession();
+  return (
+    <>
+      {!session && (
+        <>
+          <div className={loginStyles.container}>
+            <Head>
+              <title>Login | move.it</title>
+            </Head>
+            <img src="symbol.svg" alt="Logo stripes" />
+            <div>
+              <img src="logo-full-white.svg" alt="Full logo" />
+              <strong>Bem-vindo</strong>
+              <p>Faça login com o seu GitHub para começar</p>
+              <button type="button" onClick={() => signIn("github")}>
+                <img src="github.png" alt="GitHub logo" />
+                Continuar com o GitHub
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+      {session && (
+        <>
+          <ChallengesProvider
+            level={props.level}
+            experience={props.experience}
+            completedChallenges={props.completedChallenges}
+          >
+            <div className={homeStyles.container}>
+              <button type="button" onClick={() => signOut()}>
+                <img src="/icons/close-white.png" alt="Signout" />
+              </button>
+              <Head>
+                <title>Início | move.it</title>
+              </Head>
+              <ExperienceBar />
+
+              <CountdownProvider>
+                <section>
+                  <div>
+                    <ProfileProvider
+                      avatarUrl={session.user.image}
+                      name={session.user.name}
+                    >
+                      <Profile />
+                    </ProfileProvider>
+                    <CompletedChallanges />
+                    <Countdown />
+                  </div>
+                  <div>
+                    <ChallengeBox />
+                  </div>
+                </section>
+              </CountdownProvider>
+            </div>
+          </ChallengesProvider>
+        </>
+      )}
+    </>
+  );
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { cookies } = context.req;
-  const {
-    cookieAvatarUrl,
-    cookieName,
-    level,
-    experience,
-    completedChallenges,
-  } = cookies;
+  const { level, experience, completedChallenges } = cookies;
 
-  const { code } = context.query;
-
-  if (cookieName && cookieAvatarUrl) {
-    return {
-      props: {
-        hasQuery: false,
-        hasCookies: true,
-        name: cookieName,
-        avatar_url: cookieAvatarUrl,
-        level: Number(level),
-        experience: Number(experience),
-        completedChallenges: Number(completedChallenges),
-      },
-    };
-  } else if (code) {
-    const clientSecret = process.env.CLIENT_SECRET;
-    const ACCESS_TOKEN_REQUEST = `https://github.com/login/oauth/access_token?client_id=ccdf4574d42179bf1727&client_secret=${clientSecret}&code=${code}&redirect_uri=https://move-it-nlw.vercel.app/`;
-    const ACCESS_TOKEN_RESPONSE = await axios.get(ACCESS_TOKEN_REQUEST, {
-      headers: {
-        Accept: "application/json",
-      },
-    });
-    const { access_token } = ACCESS_TOKEN_RESPONSE.data;
-    const API_REQUEST = "https://api.github.com/user";
-    const API_RESPONSE = await axios.get(API_REQUEST, {
-      headers: {
-        Authorization: `token ${access_token}`,
-      },
-    });
-    const { data } = API_RESPONSE;
-    const { avatar_url, name } = data;
-
-    return {
-      props: {
-        hasQuery: true,
-        hasCookies: false,
-        name: name,
-        avatar_url: avatar_url,
-        level: Number(level),
-        experience: Number(experience),
-        completedChallenges: Number(completedChallenges),
-      },
-    };
-  } else {
-    return {
-      props: {
-        hasQuery: false,
-        hasCookies: false,
-        name: null,
-        avatar_url: null,
-        level: null,
-        experience: null,
-        completedChallenges: null,
-      },
-    };
-  }
+  return {
+    props: {
+      level: Number(level),
+      experience: Number(experience),
+      completedChallenges: Number(completedChallenges),
+    },
+  };
 };
