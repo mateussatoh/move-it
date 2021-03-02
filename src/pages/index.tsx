@@ -42,6 +42,10 @@ export default function ChallengesPage(props: ChallengesPageProps) {
                 <img src="github.png" alt="GitHub logo" />
                 Continuar com o GitHub
               </button>
+              <button type="button" onClick={() => signIn("google")}>
+                <img src="google.png" alt="Google logo" />
+                Continuar com o Google
+              </button>
             </div>
           </div>
         </>
