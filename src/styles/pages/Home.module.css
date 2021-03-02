@@ -8,35 +8,10 @@
 }
 
 .container section {
+  margin-left: 6rem;
   flex: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 6.25rem;
   align-content: center;
-}
-
-.container > button {
-  position: absolute;
-  top: 0;
-  right: 0;
-
-  background: var(--blue);
-  width: 3.5rem;
-  height: 3.5rem;
-  margin: 2rem;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border: 0;
-  border-radius: 5px;
-  color: white;
-  font-size: 1.25rem;
-  font-weight: 600;
-  transition: ease 0.2s;
-}
-
-.container > button img {
-  width: 2.5rem;
 }

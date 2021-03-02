@@ -6,6 +6,7 @@ import { Profile } from "../components/Profile";
 import { Countdown } from "../components/Countdown";
 import { CompletedChallanges } from "../components/CompletedChallanges";
 import { ChallengeBox } from "../components/ChallengeBox";
+import { Sidebar } from "../components/Sidebar";
 
 import homeStyles from "../styles/pages/Home.module.css";
 import loginStyles from "../styles/pages/Login.module.css";
@@ -28,10 +29,10 @@ export default function ChallengesPage(props: ChallengesPageProps) {
     <>
       {!session && (
         <>
+          <Head>
+            <title>Login | move.it</title>
+          </Head>
           <div className={loginStyles.container}>
-            <Head>
-              <title>Login | move.it</title>
-            </Head>
             <img src="symbol.svg" alt="Logo stripes" />
             <div>
               <img src="logo-full-white.svg" alt="Full logo" />
@@ -47,18 +48,16 @@ export default function ChallengesPage(props: ChallengesPageProps) {
       )}
       {session && (
         <>
+          <Head>
+            <title>Início | move.it</title>
+          </Head>
           <ChallengesProvider
             level={props.level}
             experience={props.experience}
             completedChallenges={props.completedChallenges}
           >
             <div className={homeStyles.container}>
-              <button type="button" onClick={() => signOut()}>
-                <img src="/icons/close-white.png" alt="Signout" />
-              </button>
-              <Head>
-                <title>Início | move.it</title>
-              </Head>
+              <Sidebar />
               <ExperienceBar />
 
               <CountdownProvider>
