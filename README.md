@@ -13,8 +13,10 @@
 
 <p align="center">
   
-   <img src="https://user-images.githubusercontent.com/60144554/109405793-f1722180-7952-11eb-8d01-e63a609654c9.png" height="90%" width="90%"/>
-  <img src="https://user-images.githubusercontent.com/60144554/109070287-10fa1780-76d1-11eb-9e57-fb5c12df12ae.png" height="90%" width="90%"/>
+
+  
+   <img src="https://user-images.githubusercontent.com/60144554/109729103-25895480-7b96-11eb-822d-8390065138fa.png" height="90%" width="90%"/>
+  <img src="https://user-images.githubusercontent.com/60144554/109729106-2621eb00-7b96-11eb-8baf-e47f8c7b559b.png" height="90%" width="90%"/>
 
 
 </p>
@@ -48,6 +50,7 @@ O app foi desenvolvido em NextJS utilizando TypeScript e você pode acessa-lo po
 - Módulos de CSS
 - Utilização de React Context para utilizar funções e dados em componentes distintos 
 - Tipagem estática (TypeScript)
+- Implementação de login (NextAuth)
 
 
 <br>
