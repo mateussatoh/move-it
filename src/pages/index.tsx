@@ -41,34 +41,34 @@ export default function ChallengesPage(props: ChallengesPageProps) {
           <Head>
             <title>Início | move.it</title>
           </Head>
-          <ChallengesProvider
-            level={props.level}
-            experience={props.experience}
-            completedChallenges={props.completedChallenges}
+          <ProfileProvider
+            avatarUrl={session.user.image}
+            name={session.user.name}
           >
-            <div className={homeStyles.container}>
-              <Sidebar />
-              <ExperienceBar />
+            <ChallengesProvider
+              level={props.level}
+              experience={props.experience}
+              completedChallenges={props.completedChallenges}
+            >
+              <div className={homeStyles.container}>
+                <Sidebar />
+                <ExperienceBar />
 
-              <CountdownProvider>
-                <section>
-                  <div>
-                    <ProfileProvider
-                      avatarUrl={session.user.image}
-                      name={session.user.name}
-                    >
+                <CountdownProvider>
+                  <section>
+                    <div>
                       <Profile />
-                    </ProfileProvider>
-                    <CompletedChallanges />
-                    <Countdown />
-                  </div>
-                  <div>
-                    <ChallengeBox />
-                  </div>
-                </section>
-              </CountdownProvider>
-            </div>
-          </ChallengesProvider>
+                      <CompletedChallanges />
+                      <Countdown />
+                    </div>
+                    <div>
+                      <ChallengeBox />
+                    </div>
+                  </section>
+                </CountdownProvider>
+              </div>
+            </ChallengesProvider>
+          </ProfileProvider>
         </>
       )}
     </>

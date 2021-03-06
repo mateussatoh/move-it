@@ -1,9 +1,19 @@
-import { createContext, useState, ReactNode, useEffect } from "react";
+import {
+  createContext,
+  useState,
+  ReactNode,
+  useEffect,
+  useContext,
+} from "react";
 
 import Cookies from "js-cookie";
 
 import challenges from "../../challenges.json";
 import { LevelUpModal } from "../components/LevelUpModal";
+
+import axios from "axios";
+
+import { ProfileContext } from "./ProfileContext";
 
 interface ChallengesProviderProps {
   children: ReactNode;
@@ -35,6 +45,8 @@ export function ChallengesProvider({
   children,
   ...cookies
 }: ChallengesProviderProps) {
+  const { name, avatarUrl } = useContext(ProfileContext);
+
   const [level, setLevel] = useState(cookies.level ?? 1);
   const [experience, setExperience] = useState(cookies.experience ?? 0);
   const [completedChallenges, setCompletedChallenges] = useState(
@@ -45,14 +57,39 @@ export function ChallengesProvider({
 
   const experienceToNextLevel = Math.pow((level + 1) * 4, 2);
 
+  async function setCookies() {
+    await axios.post("api/userget", { name: name }).then((response) => {
+      const { level, experience, completedChallenges } = response.data.user;
+
+      Cookies.set("level", String(level));
+      Cookies.set("experience", String(experience));
+      Cookies.set("completedChallenges", String(completedChallenges));
+
+      setLevel(level);
+      setExperience(experience);
+      setCompletedChallenges(completedChallenges);
+    });
+  }
+
   useEffect(() => {
     Notification.requestPermission();
+    setCookies();
   }, []);
 
   useEffect(() => {
-    Cookies.set("level", String(level));
-    Cookies.set("experience", String(experience));
-    Cookies.set("completedChallenges", String(completedChallenges));
+    if (level !== 1) {
+      Cookies.set("level", String(level));
+      Cookies.set("experience", String(experience));
+      Cookies.set("completedChallenges", String(completedChallenges));
+
+      axios.post("/api/userpost", {
+        name: name,
+        avatarUrl: avatarUrl,
+        level: level,
+        experience: experience,
+        completedChallenges: completedChallenges,
+      });
+    }
   }, [level, experience, completedChallenges]);
 
   function levelUp() {
