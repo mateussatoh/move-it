@@ -19,7 +19,13 @@ export function Sidebar() {
       </button>
       {session && (
         <div className={styles.logout}>
-          <button type="button" onClick={() => signOut()}>
+          <button
+            type="button"
+            onClick={() => {
+              signOut();
+              router.push("/");
+            }}
+          >
             <img src="/icons/close-white.png" alt="Signout" />
           </button>
         </div>

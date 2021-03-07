@@ -1,20 +1,14 @@
 import { NowRequest, NowResponse } from "@vercel/node";
 
-import { MongoClient, Db } from "mongodb";
+import { MongoClient } from "mongodb";
 
-async function conectToDatabase(uri: string) {
-  const client = await MongoClient.connect(uri, {
+export default async (request: NowRequest, response: NowResponse) => {
+  const client = await MongoClient.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
 
   const db = client.db("moveit-database");
-
-  return db;
-}
-
-export default async (request: NowRequest, response: NowResponse) => {
-  const db = await conectToDatabase(process.env.MONGODB_URI);
   const collection = db.collection("userinfo");
 
   const {
@@ -38,7 +32,9 @@ export default async (request: NowRequest, response: NowResponse) => {
   };
   const options = { upsert: true };
 
-  await collection.updateOne(query, update, options);
+  await collection.updateOne(query, update, options).finally(() => {
+    client.close();
+  });
 
   return response.status(201).json({ wasSend: true });
 };

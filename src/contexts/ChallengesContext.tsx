@@ -47,56 +47,53 @@ export function ChallengesProvider({
 }: ChallengesProviderProps) {
   const { name, avatarUrl } = useContext(ProfileContext);
 
-  const [level, setLevel] = useState(cookies.level ?? 1);
-  const [experience, setExperience] = useState(cookies.experience ?? 0);
-  const [completedChallenges, setCompletedChallenges] = useState(
-    cookies.completedChallenges ?? 0
-  );
+  const [level, setLevel] = useState(1);
+  const [experience, setExperience] = useState(0);
+  const [completedChallenges, setCompletedChallenges] = useState(0);
   const [activeChallenge, setActiveChallenge] = useState(null);
   const [levelUpModalOpen, setLevelUpModalOpen] = useState(false);
 
   const experienceToNextLevel = Math.pow((level + 1) * 4, 2);
   const experienceOfPreviusLevel = Math.pow(level * 4, 2);
 
-  const totalExperience = experienceOfPreviusLevel + experience;
+  const totalExperience = experienceOfPreviusLevel + experience - 16;
 
-  async function setCookies() {
-    if (level !== 1) {
-      await axios.post("api/userget", { name: name }).then((response) => {
+  async function setData() {
+    await axios
+      .post("api/userget", { name: name })
+      .then((response) => {
         const { level, experience, completedChallenges } = response.data.user;
-
-        Cookies.set("level", String(level));
-        Cookies.set("experience", String(experience));
-        Cookies.set("completedChallenges", String(completedChallenges));
-
         setLevel(level);
         setExperience(experience);
         setCompletedChallenges(completedChallenges);
+      })
+      .catch((error) => {
+        console.log(error);
+        return null;
       });
-    }
   }
 
   useEffect(() => {
     Notification.requestPermission();
-    setCookies();
+    setData();
   }, []);
 
   useEffect(() => {
-    if (level !== 1) {
-      Cookies.set("level", String(level));
-      Cookies.set("experience", String(experience));
-      Cookies.set("completedChallenges", String(completedChallenges));
-
-      axios.post("/api/userpost", {
+    axios
+      .post("/api/userpost", {
         name: name,
         avatarUrl: avatarUrl,
         level: level,
         experience: experience,
         totalExperience: totalExperience,
         completedChallenges: completedChallenges,
+      })
+      .finally(() => {
+        Cookies.set("level", String(level));
+        Cookies.set("experience", String(experience));
+        Cookies.set("completedChallenges", String(completedChallenges));
       });
-    }
-  }, [level, experience, completedChallenges]);
+  }, [totalExperience]);
 
   function levelUp() {
     setLevel(level + 1);
@@ -125,7 +122,7 @@ export function ChallengesProvider({
     setActiveChallenge(null);
   }
 
-  function completeChallenge() {
+  async function completeChallenge() {
     if (!activeChallenge) {
       return;
     }

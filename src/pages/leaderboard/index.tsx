@@ -43,21 +43,15 @@ export default function Leaderboard({ data }) {
   );
 }
 
-async function conectToDatabase(uri: string) {
-  const client = await MongoClient.connect(uri, {
+export const getServerSideProps: GetServerSideProps = async () => {
+  const client = await MongoClient.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
 
   const db = client.db("moveit-database");
-
-  return db;
-}
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  const db = await conectToDatabase(process.env.MONGODB_URI);
   const collection = db.collection("userinfo");
-  const sort = { level: -1 };
+  const sort = { totalExperience: -1 };
   const projection = {
     _id: 0,
     name: 1,
@@ -70,7 +64,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   const cursor = collection.find({}).sort(sort).project(projection);
 
-  const data = await cursor.toArray();
+  const data = await cursor.toArray().finally(() => {
+    client.close();
+  });
 
   return {
     props: {
