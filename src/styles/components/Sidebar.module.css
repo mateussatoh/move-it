@@ -30,7 +30,7 @@
   background: var(--white);
   border: 0;
 }
-.container button:last-child {
+.logout button {
   background: var(--red);
 
   margin-bottom: 2rem;

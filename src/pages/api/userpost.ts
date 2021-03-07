@@ -22,6 +22,7 @@ export default async (request: NowRequest, response: NowResponse) => {
     avatarUrl,
     level,
     experience,
+    totalExperience,
     completedChallenges,
   } = request.body;
 
@@ -31,6 +32,7 @@ export default async (request: NowRequest, response: NowResponse) => {
       avatarUrl: avatarUrl,
       level: level,
       experience: experience,
+      totalExperience: totalExperience,
       completedChallenges: completedChallenges,
     },
   };

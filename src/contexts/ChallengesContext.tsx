@@ -56,19 +56,24 @@ export function ChallengesProvider({
   const [levelUpModalOpen, setLevelUpModalOpen] = useState(false);
 
   const experienceToNextLevel = Math.pow((level + 1) * 4, 2);
+  const experienceOfPreviusLevel = Math.pow(level * 4, 2);
+
+  const totalExperience = experienceOfPreviusLevel + experience;
 
   async function setCookies() {
-    await axios.post("api/userget", { name: name }).then((response) => {
-      const { level, experience, completedChallenges } = response.data.user;
+    if (level !== 1) {
+      await axios.post("api/userget", { name: name }).then((response) => {
+        const { level, experience, completedChallenges } = response.data.user;
 
-      Cookies.set("level", String(level));
-      Cookies.set("experience", String(experience));
-      Cookies.set("completedChallenges", String(completedChallenges));
+        Cookies.set("level", String(level));
+        Cookies.set("experience", String(experience));
+        Cookies.set("completedChallenges", String(completedChallenges));
 
-      setLevel(level);
-      setExperience(experience);
-      setCompletedChallenges(completedChallenges);
-    });
+        setLevel(level);
+        setExperience(experience);
+        setCompletedChallenges(completedChallenges);
+      });
+    }
   }
 
   useEffect(() => {
@@ -87,6 +92,7 @@ export function ChallengesProvider({
         avatarUrl: avatarUrl,
         level: level,
         experience: experience,
+        totalExperience: totalExperience,
         completedChallenges: completedChallenges,
       });
     }

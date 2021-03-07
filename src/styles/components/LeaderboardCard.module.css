@@ -1,0 +1,80 @@
+.container {
+  display: grid;
+  grid-template-columns: 0.8fr 4.2fr 2fr 2fr;
+  width: 70vw;
+  height: 6rem;
+  margin: 1rem auto 0 auto;
+
+  background: var(--white);
+}
+
+.container p:first-child {
+  justify-self: center;
+  align-self: center;
+
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+
+  color: rgba(102, 102, 102, 0.5);
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+
+  border-left: 4px var(--background) solid;
+  padding-left: 1.5rem;
+}
+
+.avatar div {
+  display: flex;
+  flex-direction: column;
+}
+.avatar > img:first-child {
+  width: 4.5rem;
+  height: 4.5rem;
+
+  border-radius: 4rem;
+  margin-right: 1.5rem;
+}
+
+.avatar div strong {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1.2rem;
+  line-height: 24px;
+
+  color: #2e384d;
+  margin-bottom: 0.5rem;
+}
+
+.avatar div p {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
+
+  color: rgba(102, 102, 102, 0.5);
+}
+
+.avatar div p img {
+  margin-right: 0.5rem;
+}
+
+.numbers {
+  display: flex;
+  align-items: center;
+}
+
+.numbers p {
+  font-weight: 500;
+  font-size: 16px;
+  color: rgba(102, 102, 102, 0.5);
+}
+.numbers p:first-child {
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--blue);
+  margin-right: 5px;
+}

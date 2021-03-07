@@ -1,11 +1,12 @@
 import styles from "../styles/components/Sidebar.module.css";
 
-import { signIn, signOut, useSession } from "next-auth/client";
+import { signOut, useSession } from "next-auth/client";
 
 import { useRouter } from "next/router";
 
 export function Sidebar() {
   const router = useRouter();
+  const [session, loading] = useSession();
 
   return (
     <div className={styles.container}>
@@ -16,9 +17,13 @@ export function Sidebar() {
       <button type="button" onClick={() => router.push("/")}>
         <img src="/icons/home.svg" alt="home" />
       </button>
-      <button type="button" onClick={() => signOut()}>
-        <img src="/icons/close-white.png" alt="Signout" />
-      </button>
+      {session && (
+        <div className={styles.logout}>
+          <button type="button" onClick={() => signOut()}>
+            <img src="/icons/close-white.png" alt="Signout" />
+          </button>
+        </div>
+      )}
     </div>
   );
 }

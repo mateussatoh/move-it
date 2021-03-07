@@ -22,14 +22,31 @@ export default function Login() {
             <div>
               <img src="logo-full-white.svg" alt="Full logo" />
               <strong>Bem-vindo</strong>
-              <p>Faça login com o seu GitHub para começar</p>
-              <button type="button" onClick={() => signIn("github")}>
+              <p>Faça login para continuar</p>
+              <button
+                className={styles.github}
+                type="button"
+                onClick={() => signIn("github")}
+              >
                 <img src="github.png" alt="GitHub logo" />
                 Continuar com o GitHub
               </button>
-              <button type="button" onClick={() => signIn("google")}>
+              <button
+                className={styles.google}
+                type="button"
+                onClick={() => signIn("google")}
+              >
                 <img src="google.png" alt="Google logo" />
                 Continuar com o Google
+              </button>
+              <strong>ou</strong>
+              <button
+                className={styles.leaderboard}
+                type="button"
+                onClick={() => router.push("/leaderboard")}
+              >
+                <img src="/icons/medal.png" alt="Google logo" />
+                Veja o placar geral
               </button>
             </div>
           </div>

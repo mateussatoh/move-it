@@ -15,8 +15,7 @@
   position: absolute;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 60vh;
+  height: 80vh;
   right: 18rem;
 }
 
@@ -24,7 +23,8 @@
   color: var(--white);
   font-style: normal;
   font-weight: 600;
-  font-size: 2rem;
+  font-size: 1.5rem;
+  margin-top: 2rem;
 }
 
 .container div p {
@@ -34,7 +34,7 @@
   height: 3.5rem;
   font-style: normal;
   font-weight: 500;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 .container div button {
@@ -46,29 +46,37 @@
   justify-content: center;
   border: 0;
   border-radius: 0.5rem;
-  background: #161b22;
   color: white;
   font-size: 1.2rem;
   font-weight: 600;
   transition: ease 0.2s;
 }
 
-.container div > button {
-  background: #161b22;
-}
-
-.container div button:last-child {
-  background: #c61c19;
-}
-
 .container div button img {
   padding-right: 2rem;
   height: 50%;
 }
-.container div > button:hover {
+
+.github {
+  background: #161b22;
+}
+
+.google {
+  background: #c61c19;
+}
+
+.leaderboard {
+  background: #2d9613;
+}
+
+.github:hover {
   background: #555555;
 }
 
-.container div button:last-child:hover {
+.google:hover {
   background: #eb4132;
+}
+
+.leaderboard:hover {
+  background: #3abd19;
 }

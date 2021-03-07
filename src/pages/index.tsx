@@ -20,7 +20,7 @@ interface ChallengesPageProps {
   completedChallenges: number;
 }
 
-import { signIn, signOut, useSession } from "next-auth/client";
+import { useSession } from "next-auth/client";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
