@@ -4,7 +4,7 @@ import { GetServerSideProps } from "next";
 import { ExperienceBar } from "../components/ExperienceBar";
 import { Profile } from "../components/Profile";
 import { Countdown } from "../components/Countdown";
-import { CompletedChallanges } from "../components/CompletedChallanges";
+import { CompletedChallenges } from "../components/CompletedChallenges";
 import { ChallengeBox } from "../components/ChallengeBox";
 import { Sidebar } from "../components/Sidebar";
 
@@ -17,6 +17,7 @@ import { ProfileProvider } from "../contexts/ProfileContext";
 interface ChallengesPageProps {
   level: number;
   experience: number;
+  totalExperience: number;
   completedChallenges: number;
 }
 
@@ -48,6 +49,7 @@ export default function ChallengesPage(props: ChallengesPageProps) {
             <ChallengesProvider
               level={props.level}
               experience={props.experience}
+              totalExperience={props.totalExperience}
               completedChallenges={props.completedChallenges}
             >
               <div className={homeStyles.container}>
@@ -58,7 +60,7 @@ export default function ChallengesPage(props: ChallengesPageProps) {
                   <section>
                     <div>
                       <Profile />
-                      <CompletedChallanges />
+                      <CompletedChallenges />
                       <Countdown />
                     </div>
                     <div>
@@ -77,12 +79,13 @@ export default function ChallengesPage(props: ChallengesPageProps) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { cookies } = context.req;
-  const { level, experience, completedChallenges } = cookies;
+  const { level, experience, totalExperience, completedChallenges } = cookies;
 
   return {
     props: {
       level: Number(level),
       experience: Number(experience),
+      totalExperience: Number(totalExperience),
       completedChallenges: Number(completedChallenges),
     },
   };

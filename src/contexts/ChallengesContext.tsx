@@ -19,6 +19,7 @@ interface ChallengesProviderProps {
   children: ReactNode;
   level: number;
   experience: number;
+  totalExperience: number;
   completedChallenges: number;
 }
 
@@ -46,54 +47,43 @@ export function ChallengesProvider({
   ...cookies
 }: ChallengesProviderProps) {
   const { name, avatarUrl } = useContext(ProfileContext);
+  useEffect(() => {
+    Notification.requestPermission();
+    console.log("Fetch from database");
 
-  const [level, setLevel] = useState(1);
-  const [experience, setExperience] = useState(0);
-  const [completedChallenges, setCompletedChallenges] = useState(0);
-  const [activeChallenge, setActiveChallenge] = useState(null);
-  const [levelUpModalOpen, setLevelUpModalOpen] = useState(false);
-
-  const experienceToNextLevel = Math.pow((level + 1) * 4, 2);
-  const experienceOfPreviusLevel = Math.pow(level * 4, 2);
-
-  const totalExperience = experienceOfPreviusLevel + experience - 16;
-
-  async function setData() {
-    await axios
+    axios
       .post("api/userget", { name: name })
       .then((response) => {
-        const { level, experience, completedChallenges } = response.data.user;
+        const {
+          level,
+          experience,
+          totalExperience,
+          completedChallenges,
+        } = response.data.user;
+
+        setCompletedChallenges(completedChallenges);
+        console.log(completedChallenges);
         setLevel(level);
         setExperience(experience);
-        setCompletedChallenges(completedChallenges);
+        setTotalExperience(totalExperience);
       })
       .catch((error) => {
         console.log(error);
         return null;
       });
-  }
-
-  useEffect(() => {
-    Notification.requestPermission();
-    setData();
   }, []);
 
-  useEffect(() => {
-    axios
-      .post("/api/userpost", {
-        name: name,
-        avatarUrl: avatarUrl,
-        level: level,
-        experience: experience,
-        totalExperience: totalExperience,
-        completedChallenges: completedChallenges,
-      })
-      .finally(() => {
-        Cookies.set("level", String(level));
-        Cookies.set("experience", String(experience));
-        Cookies.set("completedChallenges", String(completedChallenges));
-      });
-  }, [totalExperience]);
+  const [level, setLevel] = useState(cookies.level ?? 1);
+  const [experience, setExperience] = useState(cookies.experience ?? 0);
+  const [totalExperience, setTotalExperience] = useState(
+    cookies.totalExperience ?? 0
+  );
+  const [completedChallenges, setCompletedChallenges] = useState(
+    cookies.completedChallenges ?? 0
+  );
+  const [activeChallenge, setActiveChallenge] = useState(null);
+  const [levelUpModalOpen, setLevelUpModalOpen] = useState(false);
+  const experienceToNextLevel = Math.pow((level + 1) * 4, 2);
 
   function levelUp() {
     setLevel(level + 1);
@@ -134,11 +124,32 @@ export function ChallengesProvider({
       finalExperience = finalExperience - experienceToNextLevel;
       levelUp();
     }
-
+    setTotalExperience(totalExperience + amount);
     setExperience(finalExperience);
     setActiveChallenge(null);
     setCompletedChallenges(completedChallenges + 1);
   }
+
+  useEffect(() => {
+    console.log("Post to database");
+    if (level !== 1) {
+      axios
+        .post("/api/userpost", {
+          name: name,
+          avatarUrl: avatarUrl,
+          totalExperience: totalExperience,
+          experience: experience,
+          level: level,
+          completedChallenges: completedChallenges,
+        })
+        .finally(() => {
+          Cookies.set("totalExperience", String(totalExperience));
+          Cookies.set("experience", String(experience));
+          Cookies.set("level", String(level));
+          Cookies.set("completedChallenges", String(completedChallenges));
+        });
+    }
+  }, [completedChallenges]);
 
   return (
     <ChallengesContext.Provider
