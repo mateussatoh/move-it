@@ -15,8 +15,12 @@
   
 
   
-   <img src="https://user-images.githubusercontent.com/60144554/109729103-25895480-7b96-11eb-822d-8390065138fa.png" height="90%" width="90%"/>
-  <img src="https://user-images.githubusercontent.com/60144554/109729106-2621eb00-7b96-11eb-8baf-e47f8c7b559b.png" height="90%" width="90%"/>
+   <img src="https://user-images.githubusercontent.com/60144554/110393845-0b45ef80-804a-11eb-8e32-900f2e7aecd9.png" height="90%" width="90%"/>
+  <img src="https://user-images.githubusercontent.com/60144554/110393848-0c771c80-804a-11eb-97aa-91c06e2eb9a6.png" height="90%" width="90%"/>
+  <img src="https://user-images.githubusercontent.com/60144554/110393846-0bde8600-804a-11eb-9cb5-5cc1b1f2e5fe.png" height="90%" width="90%"/>
+  <img src="https://user-images.githubusercontent.com/60144554/110393844-0aad5900-804a-11eb-8cd8-16ff4463f607.png" height="90%" width="90%"/>
+  
+  
 
 
 </p>
@@ -51,6 +55,7 @@ O app foi desenvolvido em NextJS utilizando TypeScript e você pode acessa-lo po
 - Utilização de React Context para utilizar funções e dados em componentes distintos 
 - Tipagem estática (TypeScript)
 - Implementação de login (NextAuth)
+- CRUD com MongoDB
 
 
 <br>
